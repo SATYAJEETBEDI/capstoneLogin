@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Register User
 app.post("/signup", async (req, res) => {
