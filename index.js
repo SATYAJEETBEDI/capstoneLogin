@@ -13,14 +13,15 @@ app.post("/signup", async (req, res) => {
 
     const data = {
         name: req.body.username,
+        email: req.body.email,
         password: req.body.password
     }
 
     // Check if the username already exists in the database
-    const existingUser = await collection.findOne({ name: data.name });
+    const existingUser = await collection.findOne({ email: data.email });
 
     if (existingUser) {
-        res.send('User already exists. Please choose a different username.');
+        res.send('User already exists.');
     } else {
         // Hash the password using bcrypt
         const saltRounds = 10; // Number of salt rounds for bcrypt
@@ -38,7 +39,7 @@ app.post("/signup", async (req, res) => {
 // Login user 
 app.post("/login", async (req, res) => {
     try {
-        const check = await collection.findOne({ name: req.body.username });
+        const check = await collection.findOne({ email: req.body.email });
         if (!check) {
             res.send("User name cannot found")
         }
